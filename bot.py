@@ -15,8 +15,7 @@ db = redis.Redis("localhost", decode_responses=True)
 @bot.message_handler(commands=['start', 'help'])
 def start(msg):
     text = '''
-سلام {} خوش اومدی...
-کافیه عکس مورد نظرتو برای من بفرستی تا اونو به حالات مختلف (پیر و جوان و مرد و زن و...) رو تبدیل کنم
+سلام {} اهلا بكم في بوت فيس اب .. البوت الذي يغير ملامح و شكل صورتك قم ب ارسال صورتك فقط موضحا شكل وجهك للحصول على تعابير واضحة
 '''.format(msg.from_user.first_name)
     bot.send_chat_action(msg.chat.id, "typing")
     bot.send_message(msg.chat.id, text)
@@ -32,16 +31,15 @@ def send_photo(msg):
             fl.write(downloaded_file)
         key = types.InlineKeyboardMarkup()
         key.add(types.InlineKeyboardButton("جذاب", callback_data="hot"),
-                types.InlineKeyboardButton("خندان", callback_data="smile_2"),
-                types.InlineKeyboardButton("مرد", callback_data="male"))
-        key.add(types.InlineKeyboardButton("زن", callback_data="female"),
-                types.InlineKeyboardButton("کودک", callback_data="young"),
-                types.InlineKeyboardButton("پیر", callback_data="old"))
-        text = 'عکس شما ثبت شد...\nلطفا یک مورد را انتخاب کنید.'
+                types.InlineKeyboardButton("مبتسم", callback_data="smile_2"),
+                types.InlineKeyboardButton("رجل", callback_data="male"))
+        key.add(types.InlineKeyboardButton("انثئ", callback_data="female"),
+                types.InlineKeyboardButton("صغير ب العمر", callback_data="young"),
+                types.InlineKeyboardButton("كبير ب العمر", callback_data="old"))
+        text = 'تم استلام صورتك...\nختر عنصرا واحدا\nتابع @facegram1.'
         bot.send_message(msg.chat.id, text, reply_markup=key)
     except:
-        bot.send_message(msg.chat.id, "مشکلی پیش آمد...\nعکس را دوباره ارسال کنید")
-
+        bot.send_message(msg.chat.id, "حدثت مشكلة ... \ n إعادة إرسال الصورة ")
 
 @bot.callback_query_handler(func=lambda call: call.data)
 def send_edited_photo(call):
